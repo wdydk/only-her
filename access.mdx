@@ -1,0 +1,102 @@
+---
+title: Blacklist & Access
+description: Control who can open tickets and manage manual attendees.
+icon: user-lock
+---
+
+For more permission control in tickets, you can use the blacklist or allow/deny manual privileges. Blacklisted members or roles **cannot open tickets**. If an option has `Required Roles` configured, those checks also run before the ticket is opened.
+
+---
+## Important Notes
+
+Support visibility is controlled per option. If an option does not define support roles, the system falls back to the global ticket staff role configuration. `Allow` and `deny` are strictly for **extra** ticket access on a specific ticket. They do not replace the creator, claimer, or the ticket's built-in support/staff visibility rules.
+
+<Tip>Manual allow entries are preserved through claim and unclaim, denied while the ticket is closed, and restored if the ticket is reopened. Using deny removes that manual access entry entirely.</Tip>
+
+---
+
+## Global Blacklist
+<Callout icon="earth" color="#658A95" iconType="regular">These commands apply to all tickets in a guild and are not per-ticket-specific.</Callout>
+
+<AccordionGroup>
+  <Accordion title="Blacklist Member or Role" icon="user-minus">
+    Toggles a member or role on or off the ticket blacklist. Blacklisted users or users with a blacklisted role cannot open tickets.
+    <CodeGroup>
+
+```javascript Syntax
+/tickets blacklist target:<member|role>
+```
+
+```javascript Example
+/tickets blacklist target:@tr2c
+```
+
+</CodeGroup>
+<Frame caption="Blacklisting a user or role.">
+  <img src="/images/tickets/blacklist-user.png" alt="Blacklist User or Role" />
+</Frame>
+
+  </Accordion>
+
+  <Accordion title="Blacklist List" icon="list-ol">
+    Run `/tickets blacklist` without any arguments to show the users and roles that are blacklisted from opening tickets.
+    <CodeGroup>
+
+```javascript Syntax
+/tickets blacklist
+```
+</CodeGroup>
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Manual Ticket Access
+<Callout icon="ticket" color="#658A95" iconType="regular">These commands only apply to the ticket they are used in.</Callout>
+
+<AccordionGroup>
+  <Accordion title="Allow Member or Role" icon="user-plus">
+    Explicitly lets a user or a role view and send messages in the current ticket while it is open.
+    <CodeGroup>
+
+```javascript Syntax
+/tickets allow add target:<member|role>
+```
+
+```javascript Example
+/tickets allow add target:@bryce
+/tickets allow add target:@Helper
+```
+
+</CodeGroup>
+
+  </Accordion>
+
+  <Accordion title="Allow List" icon="list-ol">
+    Shows the extra users and roles that were explicitly allowed into the current ticket or the ticket specified.
+    <CodeGroup>
+
+```javascript Syntax
+/tickets allow list channel:<channel>
+```
+
+</CodeGroup>
+
+  </Accordion>
+  
+  <Accordion title="Deny Member or Role" icon="user-xmark">
+    Removes a user or role's explicit ticket access to the current ticket or the ticket specified.
+    <CodeGroup>
+
+```javascript Syntax
+/tickets deny target:<member|role> channel:<channel>
+```
+
+```javascript Example
+/tickets deny target:@bryce channel:#ticket-123
+/tickets deny target:@Helper
+```
+
+</CodeGroup>
+  </Accordion>
+</AccordionGroup>

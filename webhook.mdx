@@ -1,0 +1,111 @@
+---
+title: Webhook
+description: "Relay messages through a webhook with a custom username and avatar."
+icon: webhook
+---
+
+## What is a webhook?
+
+A webhook is a way to post a message with a custom username and avatar to a channel.
+
+<Info>
+  Webhooks support [components](/resources/scripting/components) and [embeds](/resources/scripting/embeds) with dynamic
+  [variables](/resources/scripting/variables).
+</Info>
+
+## Creating a webhook
+
+You can use the `/config webhook create` command to create a webhook.
+
+<Info>The webhook identifier is important for referencing the webhook in other commands.</Info>
+<CodeGroup>
+```javascript Syntax
+/config webhook create name:<name>
+```
+
+```javascript Example
+/config webhook create name:webster-hook
+```
+
+</CodeGroup>
+<br />
+<Frame>
+  <img src="/images/miscellaneous/webhook/create.png" />
+</Frame>
+
+### Customizing the webhook
+
+If you want to change the webhook's username or avatar, you can open the **Webhooks** tab in the channel's integrations settings.
+
+<Frame>
+  <img src="/images/miscellaneous/webhook/customize.gif" />
+</Frame>
+
+## Sending a message
+
+After creating a webhook, you can use the `/config webhook send` command to send a message.
+
+This will open a Discord modal where you can enter your desired message. Embeds and components are supported.
+
+<Info>
+  If you've forgotten the identifier, you can use the `/config webhook list` command to
+  view all webhooks.
+</Info>
+
+<CodeGroup>
+```javascript Syntax
+/config webhook send identifier:<identifier>
+```
+
+```javascript Example
+/config webhook send identifier:0kuu3zp
+```
+
+</CodeGroup>
+<br />
+<Frame>
+  <img src="/images/miscellaneous/webhook/send.png" />
+</Frame>
+
+### Editing the message
+
+You can use the `/config webhook edit` command to edit a message sent by a webhook.
+
+This will open a Discord modal where you can enter your desired message. Embeds and components are supported.
+
+<CodeGroup>
+```javascript Syntax
+/config webhook edit message_link:<message_link>
+```
+
+```javascript Example
+/config webhook edit message_link:discord.com...
+```
+
+</CodeGroup>
+<br />
+<Frame>
+  <img src="/images/miscellaneous/webhook/edit.png" />
+</Frame>
+
+## Related commands
+
+<AccordionGroup>
+    <Accordion title="Deleting a webhook">
+        You can use the `/config webhook delete` command to delete a webhook.
+
+        <CodeGroup>
+        ```javascript Syntax
+        /config webhook delete identifier:<identifier>
+        ```
+
+        ```javascript Example
+        /config webhook delete identifier:0kuu3zp
+        ```
+        </CodeGroup>
+    </Accordion>
+    <Accordion title="Viewing all webhooks">
+        You can use the `/config webhook list` command to view all webhooks.
+    </Accordion>
+
+</AccordionGroup>

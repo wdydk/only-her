@@ -1,0 +1,196 @@
+---
+title: Antiraid
+description: "Configure antiraid protections for your server."
+icon: person-to-door
+---
+
+## Configuring antiraid
+
+Use `/antiraid config` to view the server's antiraid settings. The panel summarizes which protections are enabled and their current settings. Select the pencil button beside a protection to edit it in a modal. 
+
+You can also use the standalone slash commands below without opening the configuration panel.
+
+<CodeGroup>
+```javascript Syntax
+/antiraid config
+```
+
+```javascript Example
+/antiraid config
+```
+</CodeGroup>
+
+<Frame>
+  <img src="/images/security/antiraid/config.png" />
+</Frame>
+
+## Join protections
+
+### Mass joins
+
+This module will trigger when the number of accounts joining the server exceeds the threshold within a short time frame. Configure how many joins trigger the protection, what punishment to use, and whether to lock channels.
+
+The threshold is the number of accounts that can join the server within the time frame.
+        <Info>It's recommended to keep the threshold between `5` and `10` to stay safe.</Info>
+<CodeGroup>
+```javascript Syntax
+/antiraid massjoin setting:<On|Off> threshold:<number> punishment:<ban|kick> lock_channels:<True|False> punish_new_members:<True|False>
+```
+
+```javascript Example
+/antiraid massjoin setting:On threshold:5 punishment:ban lock_channels:True punish_new_members:True
+```
+</CodeGroup>
+
+<Warning>
+  Whenever the threshold is reached, the server will be placed in a raid state.
+  This will temporarily disable intensive events which bleed dispatches, such as
+  **welcome** and **goodbye** messages.
+</Warning>
+
+<Frame>
+  <img src="/images/security/antiraid/massjoin.png" />
+</Frame>
+
+### New accounts
+
+This module will trigger when an account joins the server that is younger than the specified threshold age.
+
+<CodeGroup>
+```javascript Syntax
+/antiraid newaccounts setting:<On|Off> days:<age> punishment:<ban|kick>
+```
+
+```javascript Example
+/antiraid newaccounts setting:On days:7 punishment:ban
+```
+</CodeGroup>
+
+<Frame>
+  <img src="/images/security/antiraid/age.png" />
+</Frame>
+
+### Default avatars
+
+This module will trigger when an account joins the server without an avatar. Use the pencil button or run `/antiraid avatar` directly to configure this protection.
+
+<CodeGroup>
+```javascript Syntax
+/antiraid avatar setting:<On|Off> punishment:<ban|kick>
+```
+
+```javascript Example
+/antiraid avatar setting:On punishment:kick
+```
+</CodeGroup>
+
+<Frame>
+  <img src="/images/security/antiraid/avatar.png" />
+</Frame>
+
+## Honeypot
+
+A honeypot is a bait channel. Anyone who posts in one of your honeypot channels will be punished, making the feature useful for catching compromised accounts or automated spammers. 
+
+Use **View** beside Honeypot in `/antiraid config` to see the configured channels.
+
+<Warning>
+  Anyone who posts in a honeypot channel may be punished.
+</Warning>
+
+<Callout icon="shield" color="#658A95" iconType="regular">
+  All honeypot commands require the **Administrator** permission.
+</Callout>
+
+<Info>
+  All honeypot punishments are recorded in your server's designated moderation log channel. You can configure where these logs are sent using the `/settings modlog` command.
+</Info>
+
+<CodeGroup>
+```javascript Syntax
+/antiraid honeypot add channel:<channel> punishment:ban|softban|jail
+/antiraid honeypot remove channel:<channel>
+```
+
+```javascript Example
+/antiraid honeypot add channel:#dont-type-here punishment:ban
+/antiraid honeypot remove channel:#dont-type-here
+```
+</CodeGroup>
+
+<Frame>
+  <img src="/images/security/antiraid/honeypot.png" />
+</Frame>
+
+## Whitelist
+
+Whitelisted users can join once without being filtered by antiraid. Use **View** beside Whitelist in `/antiraid config` to see the users on the list.
+
+You can manage the whitelist from the panel or directly.
+
+<CodeGroup>
+```javascript Syntax
+/antiraid whitelist add user:<user>
+/antiraid whitelist remove user:<user>
+```
+
+```javascript Example
+/antiraid whitelist add user:@jonathan
+/antiraid whitelist remove user:@j21234
+```
+</CodeGroup>
+
+<Frame>
+  <img src="/images/security/antiraid/whitelist.png" />
+</Frame>
+
+## Responding to a raid
+
+<Steps>
+  <Step title="Remove accounts that joined during the raid">
+    Use `/antiraid raid` to remove everyone who joined within a specified time
+    window.
+
+    <CodeGroup>
+    ```javascript Syntax
+    /antiraid raid within:<duration> action:<kick|ban> reason:<reason>
+    ```
+
+    ```javascript Example
+    /antiraid raid within:1h action:ban reason:Raid cleanup
+    ```
+    </CodeGroup>
+
+    To ban a set number of recent joiners, use `/ban` with `type:recent`.
+
+    <CodeGroup>
+    ```javascript Syntax
+    /ban type:<type> count:<number> reason:<reason> duration:<duration> silent:<True|False> delete_messages:<option>
+    ```
+
+    ```javascript Example
+    /ban type:recent count:10 reason:test duration:1d silent:True delete_messages:Previous 6 hours
+    ```
+    </CodeGroup>
+
+    <Info>
+      Duration values must use the [proper format](/resources/syntax#formatting-a-duration).
+    </Info>
+
+  </Step>
+  <Step title="End the raid state">
+    After the threat has passed, use `/antiraid state` to take the server out
+    of its raid state. This re-enables intensive events, unlocks channels
+    locked by the raid response, and allows accounts to join again.
+
+    <CodeGroup>
+    ```javascript Syntax
+    /antiraid state
+    ```
+
+    ```javascript Example
+    /antiraid state
+    ```
+    </CodeGroup>
+  </Step>
+</Steps>

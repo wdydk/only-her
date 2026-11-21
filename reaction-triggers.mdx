@@ -1,0 +1,170 @@
+---
+title: "Reaction Triggers"
+description: "Automatically react to trigger messages."
+icon: face-smile
+---
+
+## Manually reacting to a message
+
+You can use the `reaction` command to react to a message with bleed.
+
+<CodeGroup>
+
+```javascript Syntax
+/reaction apply message:<message-link> emojis:<emojis>
+```
+
+```javascript Example
+/reaction apply message:https://discord.com/channels/.../... emojis:😍
+```
+
+</CodeGroup>
+<br />
+<Frame>
+    <img src="/images/configuration/reaction-triggers/react.gif" />
+</Frame>
+
+## Creating a reaction trigger
+
+You can create a reaction trigger with the `/reaction add` command.
+
+<Warning>
+  Common words such as `hey` are not allowed as triggers, as they cause heavy
+  load on the bot.
+</Warning>
+
+<CodeGroup>
+
+```javascript Syntax
+/reaction add emoji:<emoji> trigger:<trigger>
+```
+
+```javascript Example
+/reaction add emoji:😍 trigger:jon
+```
+
+</CodeGroup>
+<br />
+<Frame>
+    <img src="/images/configuration/reaction-triggers/add.png" />
+</Frame>
+
+### Viewing who added a reaction trigger
+
+You can use the `/reaction owner` command to view who added a reaction trigger.
+
+<CodeGroup>
+```javascript Syntax
+/reaction owner trigger:<trigger>
+```
+
+```javascript Example
+/reaction owner trigger:jon
+```
+
+</CodeGroup>
+<br />
+<Frame>
+    <img src="/images/configuration/reaction-triggers/owner.png" />
+</Frame>
+
+## Removing a reaction trigger
+
+You can remove a reaction trigger with the `/reaction remove` command.
+
+<Info>The `trigger` parameter will suggest your existing reaction triggers as you type.</Info>
+<CodeGroup>
+
+```javascript Syntax
+/reaction remove emoji:<emoji> trigger:<trigger>
+```
+
+```javascript Example
+/reaction remove emoji:😍 trigger:jon
+```
+
+</CodeGroup>
+<br />
+<Frame>
+    <img src="/images/configuration/reaction-triggers/remove.png" />
+</Frame>
+
+### Removing all reactions for a trigger
+
+You can remove all reactions for a trigger with the `/reaction removeall` command.
+
+<CodeGroup>
+
+```javascript Syntax
+/reaction removeall trigger:<trigger>
+```
+
+```javascript Example
+/reaction removeall trigger:jon
+```
+
+</CodeGroup>
+<br />
+<Frame>
+    <img src="/images/configuration/reaction-triggers/removeall.png" />
+</Frame>
+
+## Reacting to every message
+
+If you're interested in having reactions on every message, you can use the `/reaction messages set` command.
+This is useful for channels like `#selfies` where messages can be voted on.
+
+<Warning>
+  The channel must either be set as `imgonly` or have a slowmode of at least
+  **one minute**.
+</Warning>
+<CodeGroup>
+
+```javascript Syntax
+/reaction messages set channel:<channel> first:<emoji> second:<emoji> third:<emoji>
+```
+
+```javascript Example
+/reaction messages set channel:#selfies first:😍 second:😐 third:🤮
+```
+
+</CodeGroup>
+<br />
+<Frame>
+    <img src="/images/configuration/reaction-triggers/messages.png" />
+</Frame>
+
+### Removing all message reactions
+
+You can use the `/reaction messages remove` command to remove all auto reactions from a channel.
+
+<CodeGroup>
+
+```javascript Syntax
+/reaction messages remove channel:<channel>
+```
+
+```javascript Example
+/reaction messages remove channel:#selfies
+```
+
+</CodeGroup>
+<br />
+<Frame>
+    <img src="/images/configuration/reaction-triggers/messages-remove.png" />
+</Frame>
+
+## Related commands
+
+<AccordionGroup>
+    <Accordion title="Removing all reaction triggers">
+        You can use the `/reaction clear` command to remove all reaction triggers.
+    </Accordion>
+    <Accordion title="Viewing all reaction triggers">
+        You can use the `/reaction list` command to view all reaction triggers.
+    </Accordion>
+    <Accordion title="Viewing all channels that are receiving reactions">
+        You can use the `/reaction messages list` command to view all channels receiving reactions.
+    </Accordion>
+
+</AccordionGroup>

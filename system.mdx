@@ -1,0 +1,101 @@
+---
+title: "System Messages"
+description: "Automatically send messages when certain member events occur."
+icon: hand-wave
+---
+
+## Commands
+
+There are three system message commands, each with the same subcommands.
+
+- `welcome` - Dispatched whenever a user joins the server.
+- `goodbye` - Dispatched whenever a user leaves the server.
+- `boost` - Dispatched whenever a user boosts the server.
+
+<Tip>
+  The `boost` event is only dispatched if the server has the **Discord System
+  Message** enabled or whenever the user receives the **Server Booster** role
+  which only occurs once.
+  <img src="/images/configuration/messages/system/integrated.png" />
+</Tip>
+
+<Info>
+  The following examples use the `welcome` command, but the same syntax is
+  applied for the other system message commands.
+</Info>
+
+## Creating a system message
+
+You can create a system message with the `/config welcome add` command.
+
+<Tip>
+The `message` parameter can be raw text or an [embed](/resources/scripting/embeds) with dynamic [variables](/resources/scripting/variables).
+</Tip>
+<Info>
+The `self_destruct` parameter in system messages schedules the message for
+deletion after a specified time, which must be between `6` and `60` seconds.
+</Info>
+
+This command will open a Discord modal where you can specify the content of the message.
+<CodeGroup>
+
+```javascript Syntax
+/config welcome add channel:<channel> self_destruct:<seconds> pingable:<True|False> 
+```
+
+```javascript Example
+/config welcome add channel:#general self_destruct:30 pingable:True
+welcome to {guild.name} {user.mention}
+
+/config welcome add channel:#general pingable:True
+{embed}$v{message: {user.mention}}$v{description: welcome to {guild.name}}
+```
+
+</CodeGroup>
+<Frame>
+  <img src="/images/configuration/messages/system/add.png" />
+</Frame>
+<Frame>
+  <img src="/images/configuration/messages/system/modal.png" />
+</Frame>
+
+## Removing a system message
+
+You can remove a system message with the `/config welcome remove` command.
+
+<CodeGroup>
+
+```javascript Syntax
+/config welcome remove channel:<channel>
+```
+
+```javascript Example
+/config welcome remove channel:#general
+```
+
+</CodeGroup>
+<Frame>
+  <img src="/images/configuration/messages/system/remove.png" />
+</Frame>
+
+## Related commands
+
+<AccordionGroup>
+  <Accordion title="Viewing a system message">
+    You can use the `/config welcome view` command to view a system message.
+    <CodeGroup>
+    ```javascript Syntax
+    /config welcome view channel:<channel>
+    ```
+
+    ```javascript Example
+    /config welcome view channel:#general
+    ```
+
+    </CodeGroup>
+
+  </Accordion>
+  <Accordion title="Viewing all system messages">
+    You can use the `/config welcome list` command to view all system messages.
+  </Accordion>
+</AccordionGroup>

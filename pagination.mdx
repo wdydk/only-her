@@ -1,0 +1,93 @@
+---
+title: Pagination
+description: "Guide to paginating embeds with bleed."
+icon: arrows-turn-to-dots
+---
+
+## Setup
+
+<Warning>Only [components](/resources/scripting/components) and [embeds](/resources/scripting/embeds) created by bleed can be paginated.</Warning>
+<Steps>
+  <Step title="Set the embed">
+    First, you must set the embed to work with pagination.
+    <CodeGroup>
+    ```javascript Syntax
+    /automation pagination set message_link:<message_link>
+    ```
+    </CodeGroup>
+    <Frame>
+      <img src="/images/resources/scripting/pagination/set.png" />
+    </Frame>
+  </Step>
+  <Step title="Add the next page">
+    You can now add further pages to your embed. This command works with adding
+    any number of pages required.
+    <CodeGroup>
+    ```javascript Syntax
+    /automation pagination add message_link:<message_link>
+    ```
+    </CodeGroup>
+    This will open a modal where you can add the code for your next page.
+    <Frame>
+      <img src="/images/resources/scripting/pagination/add.png" />
+    </Frame>
+  </Step>
+  <Step title="Updating a paginated embed">
+    If you need to edit a page you've made during setup, you can use the command
+    below.
+    <CodeGroup>
+    ```javascript Syntax
+    /automation pagination update message_link:<message_link> page:<page number>
+    ```
+    </CodeGroup>
+    This will open a modal where you can edit the code for your page.
+    <Frame>
+      <img src="/images/resources/scripting/pagination/update.png" />
+    </Frame>
+  </Step>
+  <Step title="Removing a page">
+    If you want to remove a page you have set up, you can use the command below.
+    <CodeGroup>
+    ```javascript Syntax
+    /automation pagination remove message_link:<message_link> page:<page number>
+    ```
+    </CodeGroup>
+    <Frame>
+      <img src="/images/resources/scripting/pagination/remove.png" />
+    </Frame>
+  </Step>
+</Steps>
+
+## Related commands
+
+<AccordionGroup>
+  <Accordion title="Delete a paginated embed entirely">
+    <CodeGroup>
+    ```javascript Syntax
+    /automation pagination delete message_link:<message_link>
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="Reset all paginated embeds in a guild">
+    <CodeGroup>
+    ```javascript Syntax
+    /automation pagination reset
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="List all active paginations">
+    <CodeGroup>
+    ```javascript Syntax
+    /automation pagination list
+    ```
+    </CodeGroup>
+  </Accordion>
+  <Accordion title="Re-add the navigation reactions">
+    Use this command in case the arrow reactions allowing navigation between pages were deleted.
+    <CodeGroup>
+    ```javascript Syntax
+    /automation pagination restorereactions message_link:<message_link>
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>

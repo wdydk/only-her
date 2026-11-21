@@ -1,0 +1,54 @@
+---
+title: Syntax
+description: "General explanation of the syntax used for commands."
+icon: code
+---
+
+## Formatting a duration
+
+When a command requires a `duration:` parameter, you format it as a number followed by a unit. The unit can be one of the following:
+
+- `s` for seconds.
+- `m` for minutes.
+- `h` for hours.
+- `d` for days.
+- `w` for weeks.
+
+For example, `1d` represents one day, and `1w` represents one week. You can also combine units, for example, `1w2d` represents one week and two days.
+
+<CodeGroup>
+
+    ```javascript Correct
+    /timeout add member:@member duration:1w
+    /timeout add member:@member duration:2d3h
+    ```
+    ```javascript Incorrect
+    /timeout add member:@member duration:1 hour
+    /timeout add member:@member duration:2 days 3 hours
+    ```
+
+</CodeGroup>
+
+## Punishments
+
+When a command has a `punishment:` parameter, you can use it to specify the action to take. The available actions are:
+
+- `warn` to warn the user.
+- `timeout` to timeout the member.
+  - This is only available for **filter** commands.
+- `jail` to jail the user.
+- `kick` to kick the member from the server.
+- `softban` to ban and unban the member, deleting their messages from the last 7 days.
+  - This is only available for the **antiraid** honeypot.
+- `ban` to ban the member from the server.
+- `delete` to delete the message if applicable.
+- `remove` to remove the reaction.
+  - This is only available for **reaction trigger** commands.
+- `stripstaff` to remove the staff roles from the member.
+  - This is only available for **antinuke** commands.
+  - This will remove every role with a dangerous permission, such as **Administrator**, **Ban Members** or **Manage Roles**.
+  - This will also remove any roles set via [fake permissions](/security/fake-permissions).
+
+Not every command supports every action. The actions available for a command are shown when you fill in the `punishment:` parameter.
+
+For example, to warn a user, you would use `punishment:warn`.

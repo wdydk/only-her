@@ -1,0 +1,360 @@
+---
+title: "Antinuke"
+description: "Impose restrictions on moderators to prevent destructive behavior."
+icon: "fingerprint"
+---
+
+## Overview
+
+### Why use an antinuke system?
+
+It's important to have an antinuke system in place to prevent moderators from abusing their permissions. This is a security measure which keeps your server safe from any harmful actions.
+
+### How does the antinuke work?
+
+Antinuke sets a limit on the number of actions a moderator can perform in a certain time frame. If the limit is exceeded, the moderator will be punished and a message will be sent to the owner.
+
+---
+
+## Configuring the antinuke
+
+<Tip>
+  Discord recently implemented a new **mass ban** feature which can quickly ban
+  **100\+ members**. It's **HIGHLY** recommended to utilize [fake
+  permissions](/security/fake-permissions) to prevent moderators from using this
+  feature.
+</Tip>
+
+### Configuring modules with the modal
+
+Run `/antinuke config` to open the antinuke configuration modal. The modal shows
+which modules are enabled and lets you select a module to configure its
+settings. Use the matching commands in [configuring with commands](#configuring-with-commands)
+if you prefer to configure the antinuke with commands instead of the modal.
+
+<Frame caption="The antinuke configuration modal shows enabled modules and lets you select a module to configure.">
+  <img src="/images/security/antinuke/config-modal.png" alt="Antinuke configuration modal with the module selector open" />
+</Frame>
+
+
+#### Managing antinuke admins
+
+Initially, only the **server owner** can configure the antinuke. Use
+`/antinuke admin add` to allow another user to manage it.
+
+<Warning>
+  This is a dangerous command and will allow the user to entirely alter the
+  antinuke configuration.
+</Warning>
+
+<CodeGroup>
+
+```javascript Syntax
+/antinuke admin add user:<user>
+```
+
+
+```javascript Example
+/antinuke admin add user:@jonathan
+```
+
+</CodeGroup>
+
+<br />
+
+<Frame>
+  <img src="/images/security/antinuke/admin.png" />
+</Frame>
+
+To remove an antinuke admin, use `/antinuke admin remove`.
+<CodeGroup>
+
+```javascript Syntax    
+/antinuke admin remove user:<user>
+```
+
+```javascript Example
+/antinuke admin remove user:@j21234
+```
+</CodeGroup>
+
+#### Exempting users from the antinuke
+
+You can exempt users from the antinuke with the `/antinuke whitelist` command.
+
+<Warning>
+  This is a dangerous command and will allow the user to bypass the antinuke
+  entirely.
+</Warning>
+
+<CodeGroup>
+
+```javascript Syntax
+/antinuke whitelist add user:<user>
+/antinuke whitelist remove user:<user>
+```
+
+```javascript Example
+/antinuke whitelist add user:@jonathan
+/antinuke whitelist remove user:@j21234
+```
+
+</CodeGroup>
+
+<br />
+
+<Frame>
+  ![](/images/security/antinuke/whitelist.png)
+</Frame>
+
+### Configuring with commands
+
+#### Watching permission changes
+
+Use these commands to watch permission grants or removals, remove a permission
+from the watch list, or view the permissions currently watched. When a watched
+permission changes on a role, bleed reverts the change and reports who made it.
+
+<CodeGroup>
+
+```javascript Syntax
+/antinuke permissions watch direction:<direction> permission:<permission>
+/antinuke permissions unwatch direction:<direction> permission:<permission>
+/antinuke permissions list
+```
+
+```javascript Example
+/antinuke permissions watch direction:granted permission:manage_roles
+/antinuke permissions unwatch direction:removed permission:manage_roles
+/antinuke permissions list
+```
+
+</CodeGroup>
+
+Use `list` to see which permissions are currently watched. Available permission
+values are:
+
+| Permissions          |
+| -----------          |
+| `administrator`      |
+| `ban_members`        |
+| `mention_everyone`   |
+| `kick_members`       |
+| `moderate_members`   |
+| `manage_guild`       |
+| `manage_channels`    |
+| `manage_roles`       |
+| `view_audit_log`     |
+| `manage_webhooks`    |
+| `manage_expressions` |
+| `manage_nicknames`   |
+
+#### Configuring modules
+
+Set `setting` to `On` or `Off`. Thresholds define how many actions trigger the
+module, and punishment defines what happens when it is triggered. For modules
+that support `command_detection`, set it to `True` to include actions performed
+with bleed commands.
+
+<Info>
+  It's recommended to keep thresholds between `1` and `6`. Available
+  punishments are listed in the [punishments](/resources/syntax#punishments)
+  section.
+</Info>
+
+<AccordionGroup>
+  <Accordion title="Punishing members for changing the vanity URL">
+    You can prevent members from changing the vanity URL with the following command:
+
+    <Warning>
+      bleed cannot revert the vanity URL due to Discord limitations.
+    </Warning>
+    <CodeGroup>
+
+    ```javascript Syntax
+    /antinuke vanity setting:<On or Off> punishment:<punishment>
+    ```
+
+    
+    ```javascript Example
+    /antinuke vanity setting:On punishment:ban
+    ```
+
+    </CodeGroup>
+
+    <br />
+
+    <Frame>
+      ![](/images/security/antinuke/vanity.png)
+    </Frame>
+  </Accordion>
+  <Accordion title="Preventing bots from being added">
+    You can prevent bots from being mass added with the following command:
+
+    <Info>
+      Add a bot to the whitelist with `/antinuke whitelist add user:<bot>`.
+    </Info>
+    <CodeGroup>
+
+    ```javascript Syntax
+    /antinuke botadd setting:<On or Off>
+    ```
+
+    
+    ```javascript Example
+    /antinuke botadd setting:On
+    ```
+
+    </CodeGroup>
+
+    <br />
+
+    <Frame>
+      ![](/images/security/antinuke/botadd.png)
+    </Frame>
+  </Accordion>
+  <Accordion title="Preventing members from being banned">
+    You can prevent members from being mass banned with the following command:
+
+    <Info>
+      Set `command_detection` to `True` to include bans performed with bleed
+      commands.
+    </Info>
+    <CodeGroup>
+
+    ```javascript Syntax
+    /antinuke ban setting:<On or Off> punishment:<punishment> threshold:<number> command_detection:<True or False>
+    ```
+
+    
+    ```javascript Example
+    /antinuke ban setting:On punishment:ban threshold:3 command_detection:True
+    ```
+
+    </CodeGroup>
+
+    <br />
+
+    <Frame>
+      ![](/images/security/antinuke/ban.png)
+    </Frame>
+  </Accordion>
+  <Accordion title="Preventing members from being kicked">
+    You can prevent members from being mass kicked with the following command:
+
+    <Info>
+      Set `command_detection` to `True` to include kicks performed with bleed
+      commands.
+    </Info>
+    <CodeGroup>
+
+    ```javascript Syntax
+    /antinuke kick setting:<On or Off> punishment:<punishment> threshold:<number> command_detection:<True or False>
+    ```
+
+    
+    ```javascript Example
+    /antinuke kick setting:On punishment:ban threshold:3 command_detection:True
+    ```
+
+    </CodeGroup>
+
+    <br />
+
+    <Frame>
+      ![](/images/security/antinuke/kick.png)
+    </Frame>
+  </Accordion>
+  <Accordion title="Preventing roles from being deleted">
+    You can prevent roles from being mass deleted with the following command:
+
+    <Info>
+      Set `command_detection` to `True` to include role changes performed with
+      bleed commands.
+    </Info>
+    <CodeGroup>
+
+    ```javascript Syntax
+    /antinuke role setting:<On or Off> punishment:<punishment> threshold:<number> command_detection:<True or False>
+    ```
+
+    
+    ```javascript Example
+    /antinuke role setting:On punishment:kick threshold:3 command_detection:True
+    ```
+
+    </CodeGroup>
+
+    <br />
+
+    <Frame>
+      ![](/images/security/antinuke/role.png)
+    </Frame>
+  </Accordion>
+  <Accordion title="Preventing channels from being created or deleted">
+    You can prevent channels from being mass created or deleted with the following command:
+
+    <CodeGroup>
+
+    ```javascript Syntax
+    /antinuke channel setting:<On or Off> punishment:<punishment> threshold:<number>
+    ```
+
+    
+    ```javascript Example
+    /antinuke channel setting:On punishment:ban threshold:3
+    ```
+
+    </CodeGroup>
+
+    <br />
+
+    <Frame>
+      ![](/images/security/antinuke/channel.png)
+    </Frame>
+  </Accordion>
+  <Accordion title="Preventing emojis from being deleted">
+    You can prevent emojis from being mass deleted with the following command:
+
+    <CodeGroup>
+
+    ```javascript Syntax
+    /antinuke emoji setting:<On or Off> punishment:<punishment> threshold:<number>
+    ```
+
+    
+    ```javascript Example
+    /antinuke emoji setting:On punishment:ban threshold:3
+    ```
+
+    </CodeGroup>
+
+    <br />
+
+    <Frame>
+      ![](/images/security/antinuke/emoji.png)
+    </Frame>
+  </Accordion>
+  <Accordion title="Preventing webhooks from being created">
+    You can prevent webhooks from being mass created with the following command:
+
+    <CodeGroup>
+
+    ```javascript Syntax
+    /antinuke webhook setting:<On or Off> punishment:<punishment> threshold:<number>
+    ```
+
+    
+    ```javascript Example
+    /antinuke webhook setting:On punishment:ban threshold:3
+    ```
+
+    </CodeGroup>
+
+    <br />
+
+    <Frame>
+      ![](/images/security/antinuke/webhook.png)
+    </Frame>
+  </Accordion>
+</AccordionGroup>

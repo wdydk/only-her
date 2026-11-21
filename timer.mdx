@@ -1,0 +1,79 @@
+---
+title: "Auto Messages"
+description: "Schedule messages to be sent at an interval."
+icon: clock
+---
+
+<Warning>
+  You can only have **one** auto message per channel, and the interval must be
+  at least **10 minutes**.
+</Warning>
+
+## Creating an auto message
+
+You can create an auto message with the `/automation timer add` command.
+
+<Info>
+  The `interval` parameter must use the proper format, you can learn more
+  [here](/resources/syntax#formatting-a-duration).
+</Info>
+<Tip>
+This command will open a Discord modal where you can enter your message. The `message` can be raw text, [components](/resources/scripting/components) or [embeds](/resources/scripting/embeds) with dynamic [variables](/resources/scripting/variables).
+</Tip>
+<CodeGroup>
+
+```javascript Syntax
+/automation timer add channel:<channel> interval:<interval>
+```
+
+```javascript Example
+/automation timer add channel:#general interval:2h 
+Hello people! This is an auto message that will be sent every 2 hours.
+```
+
+</CodeGroup>
+<br />
+<Frame>
+  <img src="/images/configuration/messages/timer/add.png" />
+</Frame>
+
+## Removing an auto message
+
+You can remove an auto message with the `/automation timer remove` command.
+
+<CodeGroup>
+```javascript Syntax
+/automation timer remove channel:<channel>
+```
+
+```javascript Example
+/automation timer remove channel:#general
+```
+
+</CodeGroup>
+<br />
+<Frame>
+  <img src="/images/configuration/messages/timer/remove.png" />
+</Frame>
+
+## Related commands
+
+<AccordionGroup>
+  <Accordion title="Viewing an auto message">
+    You can use the `/automation timer view` command to view an auto message.
+    <CodeGroup>
+    ```javascript Syntax
+    /automation timer view channel:<channel>
+    ```
+
+    ```javascript Example
+    /automation timer view channel:#general
+    ```
+
+    </CodeGroup>
+
+  </Accordion>
+  <Accordion title="Viewing all auto messages">
+    You can use the `/automation timer list` command to view all auto messages.
+  </Accordion>
+</AccordionGroup>
