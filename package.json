@@ -1,0 +1,7 @@
+{
+  "name": "only-her-docs",
+  "private": true,
+  "scripts": {
+    "start": "npx --yes mintlify@latest dev --port ${PORT:-3000} --host 0.0.0.0"
+  }
+}
